@@ -3067,6 +3067,7 @@ inline void Prepare_Item_ABSSettings(const uint8_t row) {
 	Draw_More_Icon(row);
 }
 
+#if CUSTOM_PREHEAT
 inline void Prepare_Item_Custom1Settings(const uint8_t row) {
 	DWIN_Draw_String(false, true, font8x16, White, Background_black, LBLX, MBASE(row), (char*)PREHEAT_3_LABEL);
     Draw_Menu_Line(row, ICON_Temperature);
@@ -3084,6 +3085,7 @@ inline void Prepare_Item_Custom3Settings(const uint8_t row) {
     Draw_Menu_Line(row, ICON_Temperature);
 	Draw_More_Icon(row);
 }
+#endif
 
 inline void Draw_Temperature_Menu() {
   Clear_Main_Window();
@@ -3109,9 +3111,12 @@ inline void Draw_Temperature_Menu() {
   if (PVISI(3)) Prepare_Item_FanSpeed(PSCROL(3));         // fan speed
   if (PVISI(4)) Prepare_Item_PLASettings(PSCROL(4));      // preheat pla
   if (PVISI(5)) Prepare_Item_ABSSettings(PSCROL(5));      // preheat abs
+  
+  #if CUSTOM_PREHEAT
   if (PVISI(6)) Prepare_Item_Custom1Settings(PSCROL(6));  // preheat Custom 1
   if (PVISI(7)) Prepare_Item_Custom2Settings(PSCROL(7));  // Preheat Custom 2
   if (PVISI(8)) Prepare_Item_Custom3Settings(PSCROL(8));  // Preheat Custom 3
+  #endif
 
   if (select_temp.now) Draw_Menu_Cursor(PSCROL(select_temp.now));
 
@@ -3774,10 +3779,11 @@ void HMI_Temperature(void) {
 
         //Draw "More" icon for sub-menus
         //if (index_prepare < 7) Draw_More_Icon(MROWS - index_prepare + 1);
-
+		#if CUSTOM_PREHEAT
         if (index_prepare == 6) Prepare_Item_Custom1Settings(MROWS);
 		if (index_prepare == 7) Prepare_Item_Custom2Settings(MROWS);
 		if (index_prepare == 8) Prepare_Item_Custom3Settings(MROWS);
+		#endif
       }
       else {
         Move_Highlight(1, select_temp.now + MROWS - index_prepare);

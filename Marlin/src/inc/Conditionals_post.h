@@ -1786,7 +1786,12 @@
 #endif
 
 // Shorthand for common combinations
+//TODO(Demi): Figure out why it doesn't have a heated bed as default ??? 
 #if HAS_TEMP_BED && HAS_HEATER_BED
+// #if HAS_HEATER_BED
+  //This is wrong ? 
+  // #define BED_MAXTEMP 150
+
   #define HAS_HEATED_BED 1
   #ifndef BED_OVERSHOOT
     #define BED_OVERSHOOT 10
